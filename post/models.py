@@ -20,6 +20,7 @@ class Post(models.Model):
     title = models.CharField(null=False, max_length=50)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     melody = models.FileField(upload_to=file_upload_path, null=False)
+    like_users = models.ManyToManyField(User, blank=True, related_name='like_answers')
 
     def __str__(self):
         return f'{self.title}'

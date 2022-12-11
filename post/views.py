@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from post.models import Post
@@ -15,3 +16,16 @@ class PostViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    def like(self, request, *args, **kwargs):
+        post = self.get_object()
+        if request.user.is_authenticated:
+            if post.like_users.filter(pk=request.user.pk).exists():
+                # 이미 해당 answer에 좋아요를 누른 경우
+                post.like_users.remove(request.user)
+            else:
+                # 좋아요를 누르면 추가
+                post.like_users.add(request.user)
+            post.save()
+
+        return Response({"like_count": post.like_users.count()})

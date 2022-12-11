@@ -7,6 +7,9 @@ urlpatterns = [
     path('<int:post_id>', PostViewSet.as_view(actions={
         'get': 'retrieve',
     })),
+    path('<int:post_id>/like', PostViewSet.as_view(actions={
+        'get': 'like',
+    })),
     path('<int:post_id>/comment', CommentViewSet.as_view(actions={
         'post': 'create',
     })),
