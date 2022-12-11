@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
-import os, json
+import os
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.core.exceptions import ImproperlyConfigured
@@ -43,7 +44,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*',
+    '*'
 ]
 
 
@@ -56,13 +57,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'user',
     'comment',
     'post',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +78,13 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = [
+    'http://3.37.33.149',
+    'http://15.165.74.137:8000',
+    'http://localhost:3000',
+]
+
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'musicidea.urls'
