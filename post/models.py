@@ -1,16 +1,25 @@
+import os
+import uuid
+from datetime import datetime
+
 from django.db import models
 from user.models import User
 # Create your models here.
 
 
-class Post(models.Model):
-    title = models.CharField(max_length=50)
-    content = models.TextField(null=False)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    melody = models.TextField(null=False)
+def file_upload_path(instance, filename):
+    ext = filename.split('.')[-1]
+    d = datetime.now()
+    filepath = d.strftime("%Y/%m/%d")
+    suffix = d.strftime("%Y%m%d%H%M%S")
+    filename = "%s_%s.%s" % (uuid.uuid4().hex, suffix, ext)
+    return os.path.join(filepath, filename)
 
-    # created_at = models.DateTimeField(auto_now_add=True)
-    # updated_at = models.DateTimeField(auto_now=True)
+
+class Post(models.Model):
+    title = models.CharField(null=False, max_length=50)
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    melody = models.FileField(upload_to=file_upload_path, null=False)
 
     def __str__(self):
         return f'{self.title}'

@@ -10,8 +10,5 @@ class Comment(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     content = models.TextField()
 
-    # created_at = models.DateTimeField(auto_now_add=True)
-    # updated_at = models.DateTimeField(auto_now=True)
-
     def __str__(self):
         return f'{self.pk}'
