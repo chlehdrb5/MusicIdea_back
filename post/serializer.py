@@ -8,7 +8,7 @@ class PostSerializer(serializers.ModelSerializer):
     is_liked = serializers.SerializerMethodField()
     like_count = serializers.SerializerMethodField()
     tags = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
-    str_tags = serializers.CharField(max_length=60, write_only=True)
+    str_tags = serializers.CharField(max_length=60, write_only=True, allow_blank=True)
 
     def get_is_liked(self, obj):
         request = self.context['request']
@@ -21,10 +21,10 @@ class PostSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         tag_names = validated_data.pop('str_tags')
-        tag_names = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z#]", "", tag_names) # 특수 문자 제거 (#제외)
+        tag_names = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z#]", "", tag_names)    # 특수 문자 제거 (#제외)
         instance = super().create(validated_data)
         tags = []
-        for name in tag_names.split('#'):
+        for name in tag_names.split('#')[1:]:   # '#'이 안붙은 태그는 제거
             if not name:
                 continue    # 공백은 X
             tag, created = Tag.objects.get_or_create(name=name)
