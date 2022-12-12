@@ -24,7 +24,7 @@ class Post(models.Model):
     tags = models.ManyToManyField('Tag', blank=True, related_name='post')
 
     def __str__(self):
-        return f'{self.title}'
+        return f'[{self.pk}] {self.title}'
 
 
 class Tag(models.Model):

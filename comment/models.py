@@ -11,4 +11,4 @@ class Comment(models.Model):
     content = models.TextField()
 
     def __str__(self):
-        return f'{self.pk}'
+        return f'[{self.pk}] {self.content}'
