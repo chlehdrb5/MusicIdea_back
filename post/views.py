@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter, SearchFilter
 
 from post.models import Post
 from post.serializer import PostSerializer
@@ -19,9 +19,10 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
     pagination_class = PostPagination
 
-    filter_backends = [OrderingFilter]
+    filter_backends = [OrderingFilter, SearchFilter]
     ordering_fields = []
     ordering = ['-id']
+    search_fields = ('tags__name', )
 
     lookup_url_kwarg = 'post_id'
 
