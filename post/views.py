@@ -32,7 +32,7 @@ class PostViewSet(ModelViewSet):
         post = self.get_object()
         if request.user.is_authenticated:
             if post.like_users.filter(pk=request.user.pk).exists():
-                # 이미 해당 answer에 좋아요를 누른 경우
+                # 이미 해당 post에 좋아요를 누른 경우
                 post.like_users.remove(request.user)
             else:
                 # 좋아요를 누르면 추가
