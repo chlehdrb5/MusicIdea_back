@@ -9,6 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
     like_count = serializers.SerializerMethodField()
     tags = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
     str_tags = serializers.CharField(max_length=60, write_only=True, allow_blank=True)
+    comment_cnt = serializers.SerializerMethodField()
 
     def get_is_liked(self, obj):
         request = self.context['request']
@@ -18,6 +19,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_like_count(self, obj):
         return obj.like_users.count()
+
+    def get_comment_cnt(self, obj):
+        return obj.comment_set.count()
 
     def create(self, validated_data):
         tag_names = validated_data.pop('str_tags')
@@ -34,5 +38,5 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'author', 'melody', 'is_liked', 'like_count', 'tags', 'str_tags')
+        fields = ('id', 'title', 'author', 'melody', 'is_liked', 'like_count', 'tags', 'str_tags', 'comment_cnt')
         read_only_fields = ('author', )
