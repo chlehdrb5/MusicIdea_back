@@ -6,7 +6,7 @@ from user.models import User
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, null=True, on_delete=models.SET_NULL)
+    post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     content = models.TextField()
 

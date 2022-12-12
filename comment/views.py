@@ -10,6 +10,7 @@ from post.models import Post
 
 class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
+    lookup_url_kwarg = 'comment_id'
 
     def get_queryset(self):
         if 'post_id' in self.kwargs:
