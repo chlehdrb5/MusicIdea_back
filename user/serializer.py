@@ -10,13 +10,15 @@ class UserSignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['name', 'password']
+        fields = ['name', 'password', 'profile_img']
 
     def save(self, request):
         user = super().save()
 
         user.name = self.validated_data['name']
         user.set_password(self.validated_data['password'])
+        if 'profile_img' in self.validated_data:
+            user.profile_img = self.validated_data['profile_img']
         user.save()
 
         return user

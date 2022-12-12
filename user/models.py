@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
 # Create your models here.
 
 
@@ -28,6 +27,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     id = models.AutoField(primary_key=True)
     name = models.CharField(default='', max_length=20, null=False, blank=False, unique=True)
+    profile_img = models.ImageField(upload_to='profile/%Y/%m/%d/', null=True)
 
     is_admin = models.BooleanField(default=False)
 
